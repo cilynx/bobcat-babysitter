@@ -11,7 +11,7 @@ print("Entering loop")
 bobcat.last_gap = bobcat.gap
 
 while True:
-    print([getattr(bobcat, attr) for attr in ['timestamp','status','gap','miner_height','blockchain_height','ota_version','temp0','temp1','errors']])
+    print([getattr(bobcat, attr) for attr in ['timestamp','uptime','status','gap','miner_height','blockchain_height','ota_version','temp0','temp1','errors']])
     if bobcat.gap > 10 and bobcat.gap > bobcat.last_gap:
         bobcat.reset()
         bobcat.fastsync()
