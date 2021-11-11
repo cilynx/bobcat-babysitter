@@ -48,9 +48,10 @@ while True:
             print("Helium API is having issues -- nothing we can do.  Waiting it out.")
         else:
             count = 0
-            if bobcat.gap > 10 and bobcat.gap > bobcat.last_gap:
-                bobcat.reset()
-                bobcat.fastsync()
+            if isinstance(bobcat.last_gap, int) and isinstance(bobcat.gap, int):
+                if bobcat.gap > 10 and bobcat.gap > bobcat.last_gap:
+                    bobcat.reset()
+                    bobcat.fastsync()
             bobcat.last_gap = bobcat.gap
     except Exception as e:
         print(f"{e}  Rebooting via smart plug.")
