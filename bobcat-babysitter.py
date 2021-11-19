@@ -13,13 +13,15 @@ sleep_mins = 5
 
 print("Setting up")
 try:
-    bobcat.last_gap = bobcat.gap
+    bobcat.last_height = bobcat.miner_height
 except Exception as e:
     print(f"{e}  Rebooting via smart plug.")
     switch.off()
     time.sleep(10)
     switch.on()
-    bobcat.last_gap = bobcat.gap
+    bobcat.last_height = bobcat.miner_height
+
+time.sleep(sleep_mins*60)
 
 print("Entering loop")
 count = 0
@@ -48,11 +50,12 @@ while True:
             print("Helium API is having issues -- nothing we can do.  Waiting it out.")
         else:
             count = 0
-            if isinstance(bobcat.last_gap, int) and isinstance(bobcat.gap, int):
-                if bobcat.gap > 10 and bobcat.gap > bobcat.last_gap:
+            if isinstance(bobcat.last_height, int) and isinstance(bobcat.miner_height, int) and isinstance(bobcat.gap, int):
+                if bobcat.gap > 10 and bobcat.miner_height == bobcat.last_height:
+                    print("Gap is >10 and growing.")
                     bobcat.reset()
                     bobcat.fastsync()
-            bobcat.last_gap = bobcat.gap
+            bobcat.last_height = bobcat.miner_height
     except Exception as e:
         print(f"{e}  Rebooting via smart plug.")
         switch.off()
